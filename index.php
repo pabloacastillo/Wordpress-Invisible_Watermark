@@ -60,4 +60,22 @@ function invisiblewatermark_conf() {
 	include_once('invisiblewatermark_wpconfig.php');
 
 }
+
+function invisiblewatermark_add($attach_ID){ // AGREGAR MARCA DE AGUA
+	// http://codex.wordpress.org/Plugin_API/Action_Reference#Post.2C_Page.2C_Attachment.2C_and_Category_Actions
+	// http://codex.wordpress.org/Plugin_API
+	$signature=WP_PLUGIN_DIR.'/'.INVISIBLEWATERMARK_FOLDER.'/signature.png';
+	$img=get_attached_file($attach_ID);
+	// CONVERTIR IMAGEN A PNG AQUI
+	$png=substr($img,-3).'.png';
+	$cmd="convert $img $png"
+	exec($cmd);
+	$cmd="mv $png $img";
+	
+	$cmd = "$signature $img -stegano +1+1 ";
+	exec("composite $cmd $img"); // EXECUTE THE STEG OF THE IMAGE AND SAVES IT AS A NEW IMAGE
+}
+
+
+add_action('add_attachment','invisiblewatermark_add');
 ?>
