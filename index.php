@@ -68,7 +68,7 @@ function invisiblewatermark_add($attach_ID){ // AGREGAR MARCA DE AGUA
 	$img=get_attached_file($attach_ID);
 	// CONVERTIR IMAGEN A PNG AQUI
 	$png=substr($img,-3).'.png';
-	$cmd="convert $img $png"
+	$cmd="convert $img $png";
 	exec($cmd);
 	$cmd="mv $png $img";
 	
